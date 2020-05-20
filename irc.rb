@@ -5,9 +5,14 @@ port = 6667
 socket = TCPSocket.open(server, port)
 
 nickname = 'SkillcrushBot'
+channel = '#meetenchannel'
 
 socket.puts "NICK #{nickname}"
 socket.puts "USER #{nickname} 0 * #{nickname}"
+socket.puts "JOIN #{channel}"
+socket.flush
+
+socket.puts "PRIVMSG #{channel} :I am so happy to be here!"
 
 while message = socket.gets do
   puts message
@@ -16,5 +21,9 @@ while message = socket.gets do
     server = message.split(':').last
     puts "PONG #{server}"
     socket.puts "PONG #{server}"
+  elsif
+    message.match('How are you?')
+    puts "PRIVMSG #{channel} :I'm good, how are you?"
+    socket.puts "PRIVMSG #{channel} :I'm good, how are you?"
   end
 end
